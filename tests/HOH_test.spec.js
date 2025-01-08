@@ -10,7 +10,7 @@ test('Register a service test', async ({browser})=>{
         },
       });
     const page = await context.newPage();
-    await page.goto("https://hub-of-hope-staging.web.app/");
+    await page.goto("");
     
 
     await page.locator('a.font-bold[href="/resources"]').click()
