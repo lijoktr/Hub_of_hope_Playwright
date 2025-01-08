@@ -5,8 +5,7 @@ test('Register a service test', async ({browser})=>{
 
     const context = await browser.newContext({
         httpCredentials: {
-          username: 'chasingthestigma',
-          password: 'hubofhopev2',
+
         },
       });
     const page = await context.newPage();
