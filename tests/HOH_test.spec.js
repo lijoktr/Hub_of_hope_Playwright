@@ -5,19 +5,25 @@ test('Register a service test', async ({browser})=>{
 
     const context = await browser.newContext({
         httpCredentials: {
+          username: 'chasingthestigma',
+          password: 'hubofhopev2',
 
         },
       });
     const page = await context.newPage();
-    await page.goto("");
+    await page.goto("https://hub-of-hope-staging.web.app/");
     
 
     await page.locator('a.font-bold[href="/resources"]').click()
     //await page.waitForTimeout(1000) 
-    await page.waitForLoadState('networkidle');   
-    console.log(await page.locator('h3.font-bold').nth(0).textContent());
+    await page.waitForLoadState('networkidle'); 
     
-    await expect((page.locator('h3.font-bold')).nth(0)).toContainText('Understanding depression')
+    const resourcecard1 = page.locator('h3.font-bold').nth(0);
+    
+    //resourcecard1 text
+    console.log(await resourcecard1.textContent());
+    
+    await expect((resourcecard1)).toContainText('Understanding depression')
 
     await page.locator('a[href="/"] svg').click()
 
@@ -25,7 +31,7 @@ test('Register a service test', async ({browser})=>{
     await page.locator('a[href="/register-your-service"]').nth(0).click()
 
     //enter service name
-    await page.locator('[id="v-0-5"]').fill('Ohios')
+    await page.locator('[id="v-0-5"]').fill('Ohios')//for typing letters one by one .pressSequentially("Ohios")
 
     await page.locator('[id="v-0-6"]').fill('lijo@hiyield.co.uk')
 
@@ -51,11 +57,19 @@ test('Register a service test', async ({browser})=>{
     await expect(page.locator('input.h-4.w-4.form-checkbox.rounded-sm').nth(0)).toBeChecked();
 
     //click submit for review
-    //await page.locator("//span[text()='Submit for review']").click();
+    await page.locator("//span[text()='Submit for review']").click();
 
-    //await page.waitForTimeout(4000);
+    await page.locator("h2.font-brown").waitFor()
 
-    await page.pause()
+    await console.log(await page.locator("h2.font-brown").textContent())
+
+    const bool = await page.locator("h2:has-text('Thank you for registering your service with Hub of Hope')").isVisible()
+
+    expect(bool).toBeTruthy();
+
+    await page.waitForTimeout(10000);
+
+    //await page.pause()
 
 
 });
